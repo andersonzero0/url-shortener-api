@@ -77,7 +77,7 @@ export class ShortenerService {
     const urlShortener = await this.findByShortCode(shortCode);
 
     if (!urlShortener) {
-      throw new NotFoundException('Url not found');
+      throw new NotFoundException('Shortener not found');
     }
 
     await this.prisma.urlShortener.update({
@@ -85,7 +85,7 @@ export class ShortenerService {
         shortCode,
       },
       data: {
-        accessCount: {
+        clickCount: {
           increment: 1,
         },
       },
@@ -121,7 +121,7 @@ export class ShortenerService {
     const urlShortener = await this.findById(id, userId);
 
     if (!urlShortener) {
-      throw new NotFoundException('Url not found');
+      throw new NotFoundException('Shortener not found');
     }
 
     const urlShortenerUpdated = await this.prisma.urlShortener.update({
@@ -141,7 +141,7 @@ export class ShortenerService {
     const urlShortener = await this.findById(id, userId);
 
     if (!urlShortener) {
-      throw new NotFoundException('Url not found');
+      throw new NotFoundException('Shortener not found');
     }
 
     await this.prisma.urlShortener.update({

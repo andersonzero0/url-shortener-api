@@ -31,10 +31,6 @@ export class UsersService {
         email: email,
         password: hashPassword,
       },
-      select: {
-        password: false,
-        deletedAt: false,
-      },
     });
   }
 

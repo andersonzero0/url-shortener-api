@@ -8,7 +8,7 @@ export class UrlShortenerEntity
   url: string;
   shortCode: string;
   shortUrl: string;
-  accessCount?: number;
+  clickCount?: number;
 
   @Exclude()
   userId: string;

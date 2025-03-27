@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_PASSWORD: supersecret
+      POSTGRES_DB: url_shortener_db
+    networks:
+      - default
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: url-shortener-api
+    ports:
+      - '${PORT:-3000}:${PORT:-3000}'
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./src:/app/src
+    environment:
+      - PORT=${PORT:-3000}
+    networks:
+      - default
+
+networks:
+  default:
+    name: url-shortener-network

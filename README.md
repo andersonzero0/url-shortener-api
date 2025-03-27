@@ -1,85 +1,116 @@
+<p align="center"><h1 align="center">URL Shortener API</h1></p>
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+	<em><code>NestJS | PostgresSQL | Prisma | Docker</code></em>
 </p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
+<p align="center">
+	<img src="https://img.shields.io/github/license/andersonzero0/url-shortener-api?style=default&logo=opensourceinitiative&logoColor=white&color=0080ff" alt="license">
+	<img src="https://img.shields.io/github/last-commit/andersonzero0/url-shortener-api?style=default&logo=git&logoColor=white&color=0080ff" alt="last-commit">
+	<img src="https://img.shields.io/github/languages/top/andersonzero0/url-shortener-api?style=default&color=0080ff" alt="repo-top-language">
+	<img src="https://img.shields.io/github/languages/count/andersonzero0/url-shortener-api?style=default&color=0080ff" alt="repo-language-count">
 </p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<br>
 
-## Description
+### Deploy - Acessar API
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[http://localhost:3000/reference](http://localhost:3000/reference)
 
-## Project setup
+### O projeto contém..
 
-```bash
-$ yarn install
+- **Docker Compose**
+- **Jest**
+- **Pré-commit (Husky)**
+- **Documentação (Swagger)**
+- **Validação de campos com `class-validator` e `class-transformer`**
+- **GitHub Actions (Lint e Testes)**
+
+### Funcionalidades novas adicionadas
+
+- **Expiração da URL encurtada**
+
+### Pré-requisitos
+
+- **Liguagem:** TypeScript
+- **Gerenciador de pacotes:** Yarn, Npm
+- **Container Runtime:** Docker
+
+### Rodar aplicação através do Docker Compose
+
+#### Variáveis de ambiente
+
+```sh
+PORT=3001
+
+BASE_URL=http://localhost:${PORT} # Definir o dominio da API, usada criar o shortUrl
+
+JWT_SECRET=secret
+
+DATABASE_URL="postgresql://postgres:supersecret@db:5432/url_shortener_db?schema=public"
 ```
 
-## Compile and run the project
+1. Clonar repositório
 
-```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
+```env
+git clone https://github.com/andersonzero0/url-shortener-api
 ```
 
-## Run tests
+2. Navegar ao diretorio do projeto
 
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
+```sh
+❯ cd url-shortener-api
 ```
 
-## Resources
+3. Renomear o arquivo `.env.example` para `.env`
 
-Check out a few resources that may come in handy when working with NestJS:
+   - Unix
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+   ```sh
+   ❯ mv .env.example .env
+   ```
 
-## Support
+   - CMD (Windows)
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+   ```sh
+   ❯ rename .env.example .env
+   ```
 
-## Stay in touch
+   - Powershell (Windows)
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+   ```sh
+   ❯ Rename-Item .env.example .env
+   ```
 
-## License
+4. Executar Docker Compose
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```sh
+❯ docker compose up -d
+```
+
+5. Acessar documentação | Swagger (Open API)
+   [http://localhost:3000/reference](http://localhost:3000/reference)
+
+### Teste unitários
+
+1. Rodar testes
+
+   - NPM
+
+   ```sh
+   ❯ npm run test
+   ```
+
+   - Yarn
+
+   ```sh
+   ❯ yarn test
+   ```
+
+### Melhorias para escalar horizontalmente
+
+- **IDs Únicos Distribuídos:** UUID v7 (A API está usando essa versão do UUID atualmente)
+- **Cache Distribuído:** Redis ou Memcached
+- **Processamento Assíncrono:** Usar filas (Kafka, RabbitMQ) para atualizar a contagem de cliques.
+
+#### Desafios:
+
+- Geração de Short Codes Únicos
+- Balanceamento de Carga

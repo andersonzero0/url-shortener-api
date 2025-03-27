@@ -39,7 +39,7 @@ export default defineConfig([
 
       parserOptions: {
         project: 'tsconfig.json',
-        tsconfigRootDir: '/Users/stagetree/studies/url-shortener-api',
+        tsconfigRootDir: __dirname,
       },
     },
 

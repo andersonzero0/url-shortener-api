@@ -18,7 +18,7 @@ export class UsersService {
   async create(data: CreateUserDTO) {
     const { email, password } = data;
 
-    const userExists = await this.userExistsByEmail(email);
+    const userExists = await this.prisma.user.findUnique({ where: { email } });
 
     if (userExists) {
       throw new ForbiddenException('User already exists');
@@ -51,13 +51,13 @@ export class UsersService {
   async update(id: string, data: CreateUserDTO) {
     const { email, password } = data;
 
-    const user = await this.userExistsById(id);
+    const user = await this.prisma.user.findUnique({ where: { id } });
 
     if (!user) {
       throw new NotFoundException('User not found');
     }
 
-    const userExists = await this.userExistsByEmail(email);
+    const userExists = await this.prisma.user.findUnique({ where: { email } });
 
     if (userExists && userExists.id !== id) {
       throw new ForbiddenException('User already exists');
@@ -75,7 +75,7 @@ export class UsersService {
   }
 
   async remove(id: string) {
-    const userExists = await this.userExistsById(id);
+    const userExists = await this.prisma.user.findUnique({ where: { id } });
 
     if (!userExists) {
       throw new NotFoundException('User not found');
@@ -87,17 +87,5 @@ export class UsersService {
     });
 
     return { message: 'User deleted' };
-  }
-
-  async userExistsById(id: string): Promise<UserEntity> {
-    const user = await this.prisma.user.findUnique({ where: { id } });
-
-    return user;
-  }
-
-  async userExistsByEmail(email: string): Promise<UserEntity> {
-    const user = await this.prisma.user.findUnique({ where: { email } });
-
-    return user;
   }
 }

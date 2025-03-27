@@ -74,13 +74,13 @@ export class ShortenerService {
   }
 
   async redirect(shortCode: string) {
-    const urlShortener = await this.findByShortCode(shortCode);
+    let urlShortener = await this.findByShortCode(shortCode);
 
     if (!urlShortener) {
       throw new NotFoundException('Shortener not found');
     }
 
-    await this.prisma.urlShortener.update({
+    urlShortener = await this.prisma.urlShortener.update({
       where: {
         shortCode,
       },

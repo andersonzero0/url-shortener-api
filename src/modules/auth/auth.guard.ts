@@ -21,14 +21,14 @@ export class AuthGuard implements CanActivate {
       context.getClass(),
     ]);
 
-    if (isPublic) {
-      return true;
-    }
-
     const request = context.switchToHttp().getRequest();
 
     const token = this.authService.extractTokenFromHeader(request);
     if (!token) {
+      if (isPublic) {
+        return true;
+      }
+
       throw new UnauthorizedException();
     }
     try {
@@ -38,8 +38,12 @@ export class AuthGuard implements CanActivate {
         throw new UnauthorizedException();
       }
 
-      request['user_id'] = payload.id;
+      request['userId'] = payload.id;
     } catch {
+      if (isPublic) {
+        return true;
+      }
+
       throw new UnauthorizedException();
     }
     return true;

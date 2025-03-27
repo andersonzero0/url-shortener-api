@@ -1,6 +1,12 @@
 import { Logger } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-import { IsNotEmpty, IsString, validateSync } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  validateSync,
+} from 'class-validator';
 
 export class EnvironmentVariables {
   @IsString()
@@ -10,6 +16,14 @@ export class EnvironmentVariables {
   @IsString()
   @IsNotEmpty()
   DATABASE_URL: string;
+
+  @IsString()
+  @IsOptional()
+  BASE_URL?: string;
+
+  @IsNumber()
+  @IsOptional()
+  PORT?: number;
 }
 
 export function validate(config: Record<string, unknown>) {

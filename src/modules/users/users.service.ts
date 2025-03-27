@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../../services/prisma/prisma.service';
-import { CreateUserDTO } from './dtos/create-user.dto';
+import { CreateUserDTO } from './dtos/users.dto';
 import { EncryptionService } from '../../services/encryption/encryption.service';
 import { UserEntity } from './entities/user.entity';
 
@@ -30,6 +30,10 @@ export class UsersService {
       data: {
         email: email,
         password: hashPassword,
+      },
+      select: {
+        password: false,
+        deletedAt: false,
       },
     });
   }
@@ -78,7 +82,7 @@ export class UsersService {
     const userExists = await this.userExistsById(id);
 
     if (!userExists) {
-      throw new ForbiddenException('User not found');
+      throw new NotFoundException('User not found');
     }
 
     await this.prisma.user.update({

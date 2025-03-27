@@ -11,7 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDTO } from './dtos/create-user.dto';
+import { CreateUserDTO, FindUserParamsDTO } from './dtos/users.dto';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -19,7 +19,6 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { UserEntity } from './entities/user.entity';
-import { FindUserParamsDTO } from './dtos/find-user-params.dto';
 import { RequestWithUserId } from '../../infra/http/http.interfaces';
 import { Public } from '../auth/public.decorator';
 
@@ -78,9 +77,9 @@ export class UsersController {
   })
   @Get('self')
   async findOneByToken(@Req() request: RequestWithUserId): Promise<UserEntity> {
-    const { user_id } = request;
+    const { userId } = request;
 
-    const user = await this.userService.findOne(user_id);
+    const user = await this.userService.findOne(userId);
 
     return new UserEntity(user);
   }
@@ -97,9 +96,9 @@ export class UsersController {
     @Req() request: RequestWithUserId,
     @Body() data: CreateUserDTO,
   ): Promise<UserEntity> {
-    const { user_id } = request;
+    const { userId } = request;
 
-    const user = await this.userService.update(user_id, data);
+    const user = await this.userService.update(userId, data);
 
     return new UserEntity(user);
   }
@@ -123,8 +122,8 @@ export class UsersController {
   async remove(
     @Req() request: RequestWithUserId,
   ): Promise<{ message: string }> {
-    const { user_id } = request;
+    const { userId } = request;
 
-    return this.userService.remove(user_id);
+    return this.userService.remove(userId);
   }
 }

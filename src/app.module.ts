@@ -8,6 +8,7 @@ import { EncryptionModule } from './services/encryption/encryption.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthModule } from './modules/auth/auth.module';
 import { AuthGuard } from './modules/auth/auth.guard';
+import { ShortenerModule } from './modules/shortener/shortener.module';
 
 @Module({
   imports: [
@@ -19,9 +20,10 @@ import { AuthGuard } from './modules/auth/auth.guard';
       expandVariables: true,
     }),
     PrismaModule,
+    AuthModule,
     UsersModule,
     EncryptionModule,
-    AuthModule,
+    ShortenerModule,
   ],
   controllers: [],
   providers: [

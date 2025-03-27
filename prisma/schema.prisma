@@ -21,4 +21,18 @@ model User {
   createdAt DateTime  @default(now()) @db.Timestamptz()
   updatedAt DateTime  @default(now()) @updatedAt @db.Timestamptz()
   deletedAt DateTime? @db.Timestamptz()
+
+  urlShorteners UrlShortener[]
+}
+
+model UrlShortener {
+  id          String    @id @default(uuid(7)) @db.Uuid
+  url         String
+  shortCode   String    @unique
+  accessCount Int       @default(0)
+  userId      String?   @db.Uuid
+  user        User?     @relation(fields: [userId], references: [id])
+  createdAt   DateTime  @default(now()) @db.Timestamptz()
+  updatedAt   DateTime  @default(now()) @updatedAt @db.Timestamptz()
+  deletedAt   DateTime? @db.Timestamptz()
 }

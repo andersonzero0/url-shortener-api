@@ -13,6 +13,7 @@ export const mockShortener = {
   shortCode: 'abc123',
   userId: 'user123',
   clickCount: 0,
+  expiresAt: null,
   createdAt: new Date('2025-03-27T20:43:14.129Z'),
   updatedAt: new Date('2025-03-27T20:43:14.129Z'),
   deletedAt: null,
@@ -106,6 +107,15 @@ describe('ShortenerService', () => {
       jest
         .spyOn(shortenerService, 'findByShortCode')
         .mockResolvedValueOnce(null);
+
+      await expect(shortenerService.redirect('abc123')).rejects.toThrow();
+    });
+
+    it('should throw ForbiddenException if shortener is expired', async () => {
+      jest.spyOn(shortenerService, 'findByShortCode').mockResolvedValueOnce({
+        ...mockShortener,
+        expiresAt: new Date(new Date().getTime() - 1000),
+      });
 
       await expect(shortenerService.redirect('abc123')).rejects.toThrow();
     });

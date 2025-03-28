@@ -12,7 +12,7 @@
 
 ### Deploy - Acessar API
 
-[http://localhost:3000/reference](http://localhost:3000/reference)
+[https://url-shortener-api-gilt.vercel.app/reference](https://url-shortener-api-gilt.vercel.app/reference)
 
 ### O projeto contém..
 

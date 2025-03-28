@@ -35,18 +35,6 @@
 
 ### Rodar aplicação através do Docker Compose
 
-#### Variáveis de ambiente
-
-```sh
-PORT=3001
-
-BASE_URL=http://localhost:${PORT} # Definir o dominio da API, usada criar o shortUrl
-
-JWT_SECRET=secret
-
-DATABASE_URL="postgresql://postgres:supersecret@db:5432/url_shortener_db?schema=public"
-```
-
 1. Clonar repositório
 
 ```env
@@ -60,6 +48,18 @@ git clone https://github.com/andersonzero0/url-shortener-api
 ```
 
 3. Renomear o arquivo `.env.example` para `.env`
+
+   ```sh
+   # .env.example
+
+   PORT=3000
+
+   BASE_URL=http://localhost:3000 # Definir o dominio da API, usada criar o shortUrl
+
+   JWT_SECRET=secret
+
+   DATABASE_URL="postgresql://postgres:supersecret@db:5432/url_shortener_db?schema=public"
+   ```
 
    - Unix
 

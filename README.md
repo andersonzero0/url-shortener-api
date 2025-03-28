@@ -95,12 +95,14 @@ git clone https://github.com/andersonzero0/url-shortener-api
    - NPM
 
    ```sh
+   ❯ npm install
    ❯ npm run test
    ```
 
    - Yarn
 
    ```sh
+   ❯ yarn
    ❯ yarn test
    ```
 

@@ -13,6 +13,7 @@ export class UrlShortenerEntity
   @Exclude()
   userId: string;
 
+  expiresAt?: string | Date;
   createdAt?: string | Date;
   updatedAt?: string | Date;
 

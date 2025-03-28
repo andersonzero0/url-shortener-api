@@ -1,7 +1,7 @@
 import {
   CreateShortenerDTO,
   FindUrlShortenerParamsDTO,
-  UpdateUrlDTO,
+  UpdateShortenerDTO,
   UrlShortenerResponse,
 } from './dtos/shortener.dto';
 import {
@@ -12,9 +12,8 @@ import {
   Get,
   NotFoundException,
   Param,
-  Patch,
   Post,
-  Query,
+  Put,
   Redirect,
   Req,
   UseInterceptors,
@@ -122,17 +121,17 @@ export class ShortenerController {
     description: 'Return a shortener updated',
     type: UrlShortenerResponse,
   })
-  @Patch(':id/url')
+  @Put(':id')
   async update(
     @Param() params: FindUrlShortenerParamsDTO,
-    @Query() data: UpdateUrlDTO,
+    @Body() data: UpdateShortenerDTO,
     @Req() request: RequestWithUserId,
   ) {
     const { id } = params;
 
-    const shortener = await this.shortenerService.updateUrl(
+    const shortener = await this.shortenerService.update(
       id,
-      data.value,
+      data,
       request.userId,
     );
 

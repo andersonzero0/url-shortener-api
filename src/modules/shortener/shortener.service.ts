@@ -1,10 +1,11 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from '../../services/prisma/prisma.service';
-import { CreateShortenerDTO } from './dtos/shortener.dto';
+import { CreateShortenerDTO, UpdateShortenerDTO } from './dtos/shortener.dto';
 import * as crypto from 'node:crypto';
 import { UsersService } from '../users/users.service';
 import { EnvironmentVariables } from '../../config/env.validation';
@@ -34,6 +35,7 @@ export class ShortenerService {
     const shortener = await this.prisma.urlShortener.create({
       data: {
         url: data.url,
+        expiresAt: data.expiresAt || null,
         shortCode,
         ...(user
           ? {
@@ -80,6 +82,13 @@ export class ShortenerService {
       throw new NotFoundException('Shortener not found');
     }
 
+    if (
+      urlShortener.expiresAt &&
+      new Date(urlShortener.expiresAt) < new Date()
+    ) {
+      throw new ForbiddenException('Shortener expired');
+    }
+
     urlShortener = await this.prisma.urlShortener.update({
       where: {
         shortCode,
@@ -117,7 +126,7 @@ export class ShortenerService {
     return `${this.baseUrl || `http://localhost:${this.port}`}/shortener/${shortCode}`;
   }
 
-  async updateUrl(id: string, url: string, userId: string) {
+  async update(id: string, data: UpdateShortenerDTO, userId: string) {
     const urlShortener = await this.findById(id, userId);
 
     if (!urlShortener) {
@@ -130,7 +139,8 @@ export class ShortenerService {
         userId: userId,
       },
       data: {
-        url,
+        url: data.url || urlShortener.url,
+        expiresAt: data.expiresAt === '' ? null : data.expiresAt,
       },
     });
 
